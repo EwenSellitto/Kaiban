@@ -6,18 +6,34 @@
     "dev": "pnpm run --parallel --filter \"./apps/**\" dev",
     "build": "pnpm run --parallel --filter \"./apps/**\" build",
     "test": "pnpm run --parallel --filter \"./apps/**\" test",
-    "lint": "pnpm run --parallel --filter \"./apps/**\" lint"
+    "lint": "pnpm run --parallel --filter \"./apps/**\" lint",
+    "format": "pnpm run --parallel --filter \"./apps/**\" format",
+    "prepare": "husky"
   },
   "author": "Seew",
   "license": "MIT",
   "packageManager": "pnpm@10.33.2",
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@nestjs/core",
       "esbuild",
-      "lightningcss"
+      "unrs-resolver"
     ],
     "ignoredBuiltDependencies": [
       "msw"
     ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tanstack/eslint-config": "^0.4.0",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "globals": "^17.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
+    "typescript-eslint": "^8.59.1"
   }
 }
