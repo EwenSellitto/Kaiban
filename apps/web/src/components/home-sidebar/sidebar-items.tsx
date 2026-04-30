@@ -1,4 +1,4 @@
-import { ChevronRightIcon, BeanIcon } from 'lucide-react'
+import { BeanIcon, ChevronRightIcon } from 'lucide-react'
 
 import {
   Item,

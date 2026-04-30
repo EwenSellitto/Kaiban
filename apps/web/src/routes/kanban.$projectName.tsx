@@ -13,7 +13,7 @@ function KanbanProject() {
     <WorkspacePage mode="kanban" projectId={projectName}>
       <div className="flex flex-col gap-2 text-lg text-muted-foreground">
         <div>Kanban board content goes here.</div>
-        <div className="text-sm">Project: {projectName ?? 'missing'}</div>
+        <div className="text-sm">Project: {projectName}</div>
       </div>
     </WorkspacePage>
   )

@@ -11,7 +11,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '#/components/ui/sidebar'
-import { getProject, projects, type WorkspaceMode } from './projects'
+import type { WorkspaceMode } from '#/features/projects/projects'
+import { getProjectById } from '#/features/projects/projects'
+import { useProjectsQuery } from '#/features/projects/use-projects-query'
 
 type WorkspaceSidebarProps = {
   mode: WorkspaceMode
@@ -19,7 +21,9 @@ type WorkspaceSidebarProps = {
 }
 
 export function WorkspaceSidebar({ mode, projectId }: WorkspaceSidebarProps) {
-  const activeProject = getProject(projectId)
+  const { data: projects = [] } = useProjectsQuery()
+  const activeProject = getProjectById(projects, projectId)
+  const basePath = mode === 'kanban' ? '/kanban' : '/tasks'
 
   return (
     <Sidebar>
@@ -34,10 +38,7 @@ export function WorkspaceSidebar({ mode, projectId }: WorkspaceSidebarProps) {
           <SidebarGroupContent>
             <SidebarMenu>
               {projects.map((project) => {
-                const to = mode === 'kanban'
-                  ? `/kanban/${project.id}`
-                  : `/tasks/${project.id}`
-
+                const to = `${basePath}/${project.id}`
                 return (
                   <SidebarMenuItem key={project.id}>
                     <SidebarMenuButton

@@ -5,6 +5,7 @@ import {
   SidebarGroup,
   SidebarHeader,
 } from '#/components/ui/sidebar'
+
 import { Item } from './ui/item'
 
 export function HomeSidebar() {
@@ -12,9 +13,9 @@ export function HomeSidebar() {
     <Sidebar>
       <SidebarHeader />
       <SidebarContent>
-        <SidebarGroup >
+        <SidebarGroup>
           <Item variant={'default'} />
-        <SidebarGroup />
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
