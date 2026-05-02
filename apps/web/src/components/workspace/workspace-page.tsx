@@ -16,13 +16,7 @@ type WorkspacePageProps = {
   contentClassName?: string
 }
 
-export function WorkspacePage({
-  mode,
-  projectId,
-  className,
-  contentClassName,
-  children,
-}: WorkspacePageProps) {
+export function WorkspacePage({ mode, projectId, className, contentClassName, children }: WorkspacePageProps) {
   const { data: projects, isPending } = useProjectsQuery()
   const project = getProjectById(projects, projectId)
 
@@ -43,9 +37,7 @@ export function WorkspacePage({
             ) : null}
           </div>
         </div>
-        <div className={cn('flex-1 sm:p-8 p-4', contentClassName)}>
-          {children}
-        </div>
+        <div className={cn('flex-1 sm:p-8 p-4', contentClassName)}>{children}</div>
       </SidebarInset>
     </div>
   )

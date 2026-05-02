@@ -41,10 +41,7 @@ export function WorkspaceSidebar({ mode, projectId }: WorkspaceSidebarProps) {
                 const to = `${basePath}/${project.id}`
                 return (
                   <SidebarMenuItem key={project.id}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={project.id === activeProject?.id}
-                    >
+                    <SidebarMenuButton asChild isActive={project.id === activeProject?.id}>
                       <Link to={to}>{project.name}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

@@ -16,9 +16,11 @@ import { Route as KanbanRouteImport } from './routes/kanban'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TasksIndexRouteImport } from './routes/tasks.index'
+import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as KanbanIndexRouteImport } from './routes/kanban.index'
 import { Route as TasksProjectIdRouteImport } from './routes/tasks.$projectId'
-import { Route as KanbanProjectNameRouteImport } from './routes/kanban.$projectName'
+import { Route as ProjectsProjectIdRouteImport } from './routes/projects.$projectId'
+import { Route as KanbanProjectIdRouteImport } from './routes/kanban.$projectId'
 
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
@@ -55,6 +57,11 @@ const TasksIndexRoute = TasksIndexRouteImport.update({
   path: '/',
   getParentRoute: () => TasksRoute,
 } as any)
+const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProjectsRoute,
+} as any)
 const KanbanIndexRoute = KanbanIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -65,9 +72,14 @@ const TasksProjectIdRoute = TasksProjectIdRouteImport.update({
   path: '/$projectId',
   getParentRoute: () => TasksRoute,
 } as any)
-const KanbanProjectNameRoute = KanbanProjectNameRouteImport.update({
-  id: '/$projectName',
-  path: '/$projectName',
+const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
+  id: '/$projectId',
+  path: '/$projectId',
+  getParentRoute: () => ProjectsRoute,
+} as any)
+const KanbanProjectIdRoute = KanbanProjectIdRouteImport.update({
+  id: '/$projectId',
+  path: '/$projectId',
   getParentRoute: () => KanbanRoute,
 } as any)
 
@@ -75,22 +87,25 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/kanban': typeof KanbanRouteWithChildren
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
   '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRouteWithChildren
-  '/kanban/$projectName': typeof KanbanProjectNameRoute
+  '/kanban/$projectId': typeof KanbanProjectIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/tasks/$projectId': typeof TasksProjectIdRoute
   '/kanban/': typeof KanbanIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
   '/tasks/': typeof TasksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/projects': typeof ProjectsRoute
   '/settings': typeof SettingsRoute
-  '/kanban/$projectName': typeof KanbanProjectNameRoute
+  '/kanban/$projectId': typeof KanbanProjectIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/tasks/$projectId': typeof TasksProjectIdRoute
   '/kanban': typeof KanbanIndexRoute
+  '/projects': typeof ProjectsIndexRoute
   '/tasks': typeof TasksIndexRoute
 }
 export interface FileRoutesById {
@@ -98,12 +113,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/kanban': typeof KanbanRouteWithChildren
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
   '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRouteWithChildren
-  '/kanban/$projectName': typeof KanbanProjectNameRoute
+  '/kanban/$projectId': typeof KanbanProjectIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/tasks/$projectId': typeof TasksProjectIdRoute
   '/kanban/': typeof KanbanIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
   '/tasks/': typeof TasksIndexRoute
 }
 export interface FileRouteTypes {
@@ -115,19 +132,22 @@ export interface FileRouteTypes {
     | '/projects'
     | '/settings'
     | '/tasks'
-    | '/kanban/$projectName'
+    | '/kanban/$projectId'
+    | '/projects/$projectId'
     | '/tasks/$projectId'
     | '/kanban/'
+    | '/projects/'
     | '/tasks/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
-    | '/projects'
     | '/settings'
-    | '/kanban/$projectName'
+    | '/kanban/$projectId'
+    | '/projects/$projectId'
     | '/tasks/$projectId'
     | '/kanban'
+    | '/projects'
     | '/tasks'
   id:
     | '__root__'
@@ -137,9 +157,11 @@ export interface FileRouteTypes {
     | '/projects'
     | '/settings'
     | '/tasks'
-    | '/kanban/$projectName'
+    | '/kanban/$projectId'
+    | '/projects/$projectId'
     | '/tasks/$projectId'
     | '/kanban/'
+    | '/projects/'
     | '/tasks/'
   fileRoutesById: FileRoutesById
 }
@@ -147,7 +169,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   KanbanRoute: typeof KanbanRouteWithChildren
-  ProjectsRoute: typeof ProjectsRoute
+  ProjectsRoute: typeof ProjectsRouteWithChildren
   SettingsRoute: typeof SettingsRoute
   TasksRoute: typeof TasksRouteWithChildren
 }
@@ -203,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TasksIndexRouteImport
       parentRoute: typeof TasksRoute
     }
+    '/projects/': {
+      id: '/projects/'
+      path: '/'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof ProjectsIndexRouteImport
+      parentRoute: typeof ProjectsRoute
+    }
     '/kanban/': {
       id: '/kanban/'
       path: '/'
@@ -217,28 +246,49 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TasksProjectIdRouteImport
       parentRoute: typeof TasksRoute
     }
-    '/kanban/$projectName': {
-      id: '/kanban/$projectName'
-      path: '/$projectName'
-      fullPath: '/kanban/$projectName'
-      preLoaderRoute: typeof KanbanProjectNameRouteImport
+    '/projects/$projectId': {
+      id: '/projects/$projectId'
+      path: '/$projectId'
+      fullPath: '/projects/$projectId'
+      preLoaderRoute: typeof ProjectsProjectIdRouteImport
+      parentRoute: typeof ProjectsRoute
+    }
+    '/kanban/$projectId': {
+      id: '/kanban/$projectId'
+      path: '/$projectId'
+      fullPath: '/kanban/$projectId'
+      preLoaderRoute: typeof KanbanProjectIdRouteImport
       parentRoute: typeof KanbanRoute
     }
   }
 }
 
 interface KanbanRouteChildren {
-  KanbanProjectNameRoute: typeof KanbanProjectNameRoute
+  KanbanProjectIdRoute: typeof KanbanProjectIdRoute
   KanbanIndexRoute: typeof KanbanIndexRoute
 }
 
 const KanbanRouteChildren: KanbanRouteChildren = {
-  KanbanProjectNameRoute: KanbanProjectNameRoute,
+  KanbanProjectIdRoute: KanbanProjectIdRoute,
   KanbanIndexRoute: KanbanIndexRoute,
 }
 
 const KanbanRouteWithChildren =
   KanbanRoute._addFileChildren(KanbanRouteChildren)
+
+interface ProjectsRouteChildren {
+  ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
+}
+
+const ProjectsRouteChildren: ProjectsRouteChildren = {
+  ProjectsProjectIdRoute: ProjectsProjectIdRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
+}
+
+const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
+  ProjectsRouteChildren,
+)
 
 interface TasksRouteChildren {
   TasksProjectIdRoute: typeof TasksProjectIdRoute
@@ -256,7 +306,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   KanbanRoute: KanbanRouteWithChildren,
-  ProjectsRoute: ProjectsRoute,
+  ProjectsRoute: ProjectsRouteWithChildren,
   SettingsRoute: SettingsRoute,
   TasksRoute: TasksRouteWithChildren,
 }

@@ -1,22 +1,13 @@
 //  @ts-check
 
 import { tanstackConfig } from '@tanstack/eslint-config'
-import {
-  sharedEslintIgnores,
-  sharedEslintPlugins,
-  sharedEslintRules,
-} from '../../eslint.config.mjs'
+
+import { sharedEslintIgnores, sharedEslintPlugins, sharedEslintRules } from '../../eslint.config.mjs'
 
 export default [
   ...tanstackConfig,
   {
-    ignores: [
-      ...sharedEslintIgnores,
-      'eslint.config.js',
-      'prettier.config.js',
-      'lint-staged.config.mjs',
-      'src/components/ui/**',
-    ],
+    ignores: [...sharedEslintIgnores, 'prettier.config.js', 'lint-staged.config.mjs', 'src/components/ui/**'],
   },
   {
     plugins: sharedEslintPlugins,

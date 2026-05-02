@@ -31,16 +31,8 @@ export function SiteNavbar() {
                       : 'inline-flex h-10 items-center justify-center rounded-lg px-2 sm:px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground'
                   }
                 >
-                  <Link
-                    to={link.to}
-                    activeProps={{ className: 'bg-muted text-foreground' }}
-                    aria-label={link.label}
-                  >
-                    {'icon' in link ? (
-                      <link.icon className="h-4 w-4" />
-                    ) : (
-                      link.label
-                    )}
+                  <Link to={link.to} activeProps={{ className: 'bg-muted text-foreground' }} aria-label={link.label}>
+                    {'icon' in link ? <link.icon className="h-4 w-4" /> : link.label}
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>

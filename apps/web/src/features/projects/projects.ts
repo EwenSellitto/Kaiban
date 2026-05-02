@@ -1,4 +1,4 @@
-export type WorkspaceMode = 'kanban' | 'tasks'
+export type WorkspaceMode = 'kanban' | 'tasks' | 'projects'
 
 export type WorkspaceProject = {
   id: string
@@ -15,7 +15,8 @@ const mockProjects: WorkspaceProject[] = [
   {
     id: 'beta',
     name: 'Beta',
-    description: 'Track the next milestone',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit fringilla ultricies. Fusce vel augue quis orci scelerisque vulputate. Pellentesque ac euismod ex. Morbi ut facilisis est, quis vulputate mi. Nam tempus, dui a hendrerit cursus, quam velit bibendum ligula, vitae dictum nisl erat blandit massa. Sed pellentesque nibh elit, vel dictum massa vehicula vel. Sed malesuada eros quis dui ultrices vestibulum. Quisque tempor tincidunt pellentesque. Sed vitae dolor rhoncus, venenatis augue nec, auctor sem. Ut semper mattis erat, ac accumsan nisl interdum sed. Integer tincidunt aliquet dui vel fermentum.',
   },
   {
     id: 'gamma',
@@ -35,9 +36,6 @@ export async function fetchProjects(): Promise<WorkspaceProject[]> {
   return mockProjects
 }
 
-export function getProjectById(
-  projects: WorkspaceProject[] | undefined,
-  projectId?: string,
-) {
+export function getProjectById(projects: WorkspaceProject[] | undefined, projectId?: string) {
   return projects?.find((project) => project.id === projectId)
 }
