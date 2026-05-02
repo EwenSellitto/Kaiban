@@ -10,7 +10,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "lint": "eslint --fix",
+    "lint": "eslint --fix --no-warn-ignored",
     "check": "prettier --check .",
     "format": "eslint --fix && prettier --write ."
   },

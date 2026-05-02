@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useMemo } from 'react'
 
 import { ProjectCard } from '#/components/projects/project-card'
+import type { WorkspaceProject } from '#/features/projects/projects'
 import { useProjectsQuery } from '#/features/projects/use-projects-query'
 
 export const Route = createFileRoute('/projects/')({ component: Projects })
@@ -17,9 +18,10 @@ function Projects() {
         <p className="text-muted-foreground">Choose a project to jump into Kanban or Tasks.</p>
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {projects.map((p, i) => (
-          <ProjectCard key={p.id} project={p} isPending={isPending} />
-        ))}
+        {projects.map((p: WorkspaceProject | undefined, i) => {
+          const key = p ? p.id : `${uuid}-${i}`
+          return <ProjectCard key={key} isPending={isPending} project={p ?? null} />
+        })}
       </div>
     </div>
   )

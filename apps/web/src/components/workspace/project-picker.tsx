@@ -1,4 +1,4 @@
-import type { WorkspaceMode } from '#/features/projects/projects'
+import type { WorkspaceMode, WorkspaceProject } from '#/features/projects/projects'
 import { useProjectsQuery } from '#/features/projects/use-projects-query'
 
 import { ProjectCard } from '../projects/project-card'
@@ -21,9 +21,10 @@ export function ProjectPicker({ mode }: ProjectPickerProps) {
         <p className="text-muted-foreground">{description}</p>
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {projects.map((p, i) => (
-          <ProjectCard key={p.id} isPending={isPending} project={p} mode={mode} />
-        ))}
+        {projects.map((p: WorkspaceProject | undefined, i) => {
+          const key = p ? p.id : `${uuid}-${i}`
+          return <ProjectCard key={key} isPending={isPending} project={p ?? null} mode={mode} />
+        })}
       </div>
     </div>
   )
